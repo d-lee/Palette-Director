@@ -43,8 +43,9 @@ static char* load_file_into_memory(FILE* f, size_t* out_size) {
   string = (char*)malloc(fsize + 1);
   fread(string, fsize, 1, f);
 
-  if (errno != 0) {
-    ap_log_error(APLOG_MARK, APLOG_ERR, 0, ap_server_conf,
+  //if (errno != 0) {
+  if (ferror(f) !=0) {
+	ap_log_error(APLOG_MARK, APLOG_ERR, 0, ap_server_conf,
                  "File load error: '%s'", strerror(errno));
     return NULL;
   }
